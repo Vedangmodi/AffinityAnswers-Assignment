@@ -21,11 +21,6 @@
 - Found that Sumatran Tiger (`Panthera tigris sumatrae`) is not present in current dataset
 - Identified proper joining conditions between all major tables
 
-## File Structure
-- `exploration.sql` - Initial database exploration queries
-- `solutions.sql` - Final answers to all questions
-- `results.md` - Actual output from running the queries
-
 ## Notes
 - All queries have been tested on the live Rfam database
 - Results reflect the current state of the database
