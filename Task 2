@@ -1,0 +1,49 @@
+a) How many types of tigers can be found in the taxonomy table of the dataset? What is the "ncbi_id" of the Sumatran Tiger? 
+
+-- How many types of tigers can be found in the taxonomy table?
+SELECT COUNT(DISTINCT species) as tiger_types_count
+FROM taxonomy 
+WHERE species LIKE '%Panthera tigris%';
+
+-- What is the ncbi_id of the Sumatran Tiger?
+SELECT species, ncbi_id
+FROM taxonomy 
+WHERE species = 'Panthera tigris sumatrae';
+
+b) Find all the columns that can be used to connect the tables in the given database. 
+
+-- 1. List all tables
+SHOW TABLES;
+
+-- 2. Examine table structures
+DESCRIBE taxonomy;
+DESCRIBE rfamseq;
+DESCRIBE family;
+DESCRIBE full_region;
+
+-- 3. Check primary and foreign keys
+SHOW KEYS FROM taxonomy WHERE Key_name = 'PRIMARY';
+SHOW KEYS FROM rfamseq WHERE Key_name = 'PRIMARY'; 
+SHOW KEYS FROM family WHERE Key_name = 'PRIMARY';
+SHOW KEYS FROM full_region;
+
+c) Which type of rice has the longest DNA sequence? (hint: use the rfamseq and the taxonomy tables)
+
+SELECT t.species, r.length as dna_sequence_length
+FROM rfamseq r
+JOIN taxonomy t ON r.ncbi_id = t.ncbi_id
+WHERE t.species LIKE '%Oryza sativa%' OR t.species LIKE '%rice%'
+ORDER BY r.length DESC
+LIMIT 1;
+
+d) We want to paginate a list of the family names and their longest DNA sequence lengths (in descending order of length)
+where only families that have DNA sequence lengths greater than 1,000,000 are included. Give a query that will return the 9th page when there are 15 results per page.
+
+SELECT f.rfam_acc, f.name as family_name, 
+       MAX(fr.seq_end - fr.seq_start + 1) as max_sequence_length
+FROM family f
+JOIN full_region fr ON f.rfam_acc = fr.rfam_acc
+WHERE (fr.seq_end - fr.seq_start + 1) > 1000000
+GROUP BY f.rfam_acc, f.name
+ORDER BY max_sequence_length DESC
+LIMIT 15 OFFSET 120;
