@@ -25,3 +25,25 @@
 - All queries have been tested on the live Rfam database
 - Results reflect the current state of the database
 - Proper error handling and edge cases considered
+
+
+
+# Task 3: AMFI India NAV Data Extractor
+
+## Script Purpose
+Extracts Scheme Name and Asset Value from AMFI India's mutual fund NAV data and converts it to TSV format.
+
+## Features
+- Downloads latest NAV data from AMFI India
+- Extracts only Scheme Name and Asset Value fields
+- Creates both TSV and JSON formats
+- Includes proper error handling and validation
+- Shows sample output and format comparison
+
+## Usage
+```bash
+# Make script executable
+chmod +x extract_nav.sh
+
+# Run the script
+./extract_nav.sh
